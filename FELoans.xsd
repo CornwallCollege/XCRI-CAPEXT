@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FELoansExtenstions"
+    targetNamespace="http://xcri.co.uk/FELoansExtenstions.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://xcri.co.uk/FELoansExtenstions.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+           >
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+      XCRI Schema extensions to support FE Loans
+      XML Schema for http://xcri.co.uk/FELoansExtenstions.xsd namespace
+
+      Created 2013-02-04
+
+      Created by 
+      
+      Mike Trebilcock (mike@trebilcock.net)
+    </xs:documentation> 
+  </xs:annotation>
+  <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="http:\\github\" />
+  <xs:complexType name="FECostDType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        This allows for the recording of three costs per presentation based on a learners age:
+            EFALearner Cost 16-18 Cost - probably Free
+            19 - 23 Cost - Co/Fully Funded Cost depending on circumstances
+            24+ Cost - Based on FE Loan
+      </xs:documentation>
+    </xs:annotation>
+      <xs:complexContent>
+          <xs:extension base="FECost">
+                  <xs:sequence>
+                          <xs:element ref="EFALearnerCost" minOccurs="0" maxOccurs="unbounded" />
+                          <xs:element ref="SFALearnerCoFunded" minOccurs="0" maxOccurs="unbounded" />
+                          <xs:element ref="SFALearnerFullyFunded" minOccurs="0" maxOccurs="unbounded" />
+                          <xs:element ref="SFALearnerLoan" minOccurs="0" maxOccurs="unbounded" />
+                  </xs:sequence>
+          </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FECost" type="FECostDType" />
+</xs:schema>
+
+
+
