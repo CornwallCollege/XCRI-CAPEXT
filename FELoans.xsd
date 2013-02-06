@@ -13,20 +13,29 @@
       XCRI Schema extensions to support FE Loans
       XML Schema for http://xcri.co.uk/FELoansExtenstions.xsd namespace
 
+      Supports recording multiple costs on a presentation:
+      <![CDATA[
+      <costs>
+        <cost type="EFALearnerFee" amount=”0.00”>The Department for Education fund this course for learners aged 16-18</cost>
+        <cost type=”SFALearnerCoFundedFee” amount=”50.00”>Depending upon your circumstances, the Department for Business Innovation and Skills may subsidise your fees for this course, to qualify for this fee you will need to produce evidence of …..</cost>
+        <cost type=”SFALearnerFullyFundedFee” amount=”0.00”> Depending upon your circumstances, the Department for Business Innovation and Skills may fully fund your fees on this course, to qualify for this fee you will need to produce evidence of …..</cost>
+        <cost type=”SFALearnerLoanFee” amount=”100.00”>The Department for Business Innovation and Skills are able to offer a low cost loan to cover the fees for this course, to find out more …..</cost>
+      </costs>
+      ]]>
       Created 2013-02-04
 
-      Created by 
-      
+      Created by
+
       Mike Trebilcock (mike@trebilcock.net)
     </xs:documentation> 
   </xs:annotation>
-  <xs:complexType name="CostDType">
+  <xs:complexType name="costDType">
     <xs:attribute name="type" type="xs:string" use="required"/>
     <xs:attribute name="amount" type="xs:decimal" use="required"/>
     <xs:attribute name="currency" type="xs:string" use="optional"/>
     <xs:attribute name="criteria" type="xs:anyURI" use="optional"/>
   </xs:complexType>
-  <xs:complexType name="CostsDType">
+  <xs:complexType name="costsDType">
     <xs:annotation>
       <xs:documentation xml:lang="en">
         This allows for the recording of three costs per presentation based on a learners age:
@@ -38,11 +47,13 @@
       <xs:complexContent>
         <xs:restriction base="xcri12terms:presentation">          
             <xs:sequence>
-              <xs:element name="cost" minOccurs="0" maxOccurs="unbounded" type="costDType"/>             
+              <xs:element name="cost" type="costDType" />             
             </xs:sequence>         
         </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="Costs" type="CostDType" />
+  <xs:element name="Costs" minOccurs="0" maxOccurs="unbounded" type="costsDType"/>
 </xs:schema>
+
+
 
