@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="FELoansExtenstions"
-    targetNamespace="http://xcri.co.uk/FELoansExtenstions"
+<xs:schema id="PresentationCostsExtension"
+    targetNamespace="http://xcri.co.uk/CostsExtension"
     elementFormDefault="qualified"
-    xmlns="http://xcri.co.uk/FELoansExtenstions"
+    xmlns="http://xcri.co.uk/PresentationCostsExtension.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns:xcri12terms="http://xcri.org/profiles/1.2/catalog/terms"
@@ -10,17 +10,23 @@
   <xs:import namespace="http://xcri.org/profiles/1.2/catalog/terms" schemaLocation="http://www.xcri.co.uk/bindings/xcri_cap_1_2.xsd"/>
   <xs:annotation>
     <xs:documentation xml:lang="en">
-      XCRI Schema extensions to support FE Loans
-      XML Schema for http://xcri.co.uk/FELoansExtenstions.xsd namespace
+      XCRI Schema extensions to support variable costs on presentations
+      XML Schema for http://xcri.co.uk/PresentationCostsExtension.xsd namespace
 
       Supports recording multiple costs on a presentation:
       <![CDATA[
       <costs>
-        <cost type="EFALearnerFee" amount=”0.00”>The Department for Education fund this course for learners aged 16-18</cost>
-        <cost type=”SFALearnerCoFundedFee” amount=”50.00”>Depending upon your circumstances, the Department for Business Innovation and Skills may subsidise your fees for this course, to qualify for this fee you will need to produce evidence of …..</cost>
-        <cost type=”SFALearnerFullyFundedFee” amount=”0.00”> Depending upon your circumstances, the Department for Business Innovation and Skills may fully fund your fees on this course, to qualify for this fee you will need to produce evidence of …..</cost>
-        <cost type=”SFALearnerLoanFee” amount=”100.00”>The Department for Business Innovation and Skills are able to offer a low cost loan to cover the fees for this course, to find out more …..</cost>
-      </costs>
+        <cost type="FullyFundedFee" amount="0" category="16-18 Learner">
+          <description>Depending upon your circumstances, the Department for Business Innovation and Skills may subsidise your fees for this course, to qualify you will need to meet the following criteria.</description>
+            <FundingCriteria xmlns="https://cornwall.ac.uk/xcriCostsCriteria">
+              <criteria xmlns="http://xcri.org/profiles/1.2/catalog">
+                You must be aged between 16 and 18 years old on the 31st August in the academic year that the course starts.
+              </criteria>
+              <criteria xmlns="http://xcri.org/profiles/1.2/catalog">
+                You must have been ordinarily resident in England or the European Union (EU) or the European Economic Area (EEA) continuously for at least the previous three years on the first day of learning.
+              </criteria>
+            </FundingCriteria>
+          </cost>        
       ]]>
       Created 2013-02-04
 
@@ -29,19 +35,29 @@
       Mike Trebilcock (mike@trebilcock.net)
     </xs:documentation> 
   </xs:annotation>
+  <xs:complexType name="FundingCriteriaDType">
+    <xs:element name="criteria" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+  </xs:complexType>
   <xs:complexType name="costDType">
     <xs:attribute name="type" type="xs:string" use="required"/>
     <xs:attribute name="amount" type="xs:decimal" use="required"/>
     <xs:attribute name="currency" type="xs:string" use="optional"/>
-    <xs:attribute name="criteria" type="xs:anyURI" use="optional"/>
+    <xs:attribute name="category" type="xs:string" use="optional"/>
+    <xs:complexContent>
+      <xs:sequence>
+        <xs:element name="description" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+        <xs:element name="FundingCriteria" minOccurs="0" maxOccurs="unbounded" type="xs:FundingCriteriaDType"/>
+      </xs:sequence>
+    </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="costsDType">
     <xs:annotation>
       <xs:documentation xml:lang="en">
-        This allows for the recording of three costs per presentation based on a learners age:
-            EFALearner Cost 16-18 Cost - probably Free
-            19 - 23 Cost - Co/Fully Funded Cost depending on circumstances
-            24+ Cost - Based on FE Loan
+        This allows for the recording of varying costs per presentation based on a learners age:
+            FullyFunded
+            CoFunded
+            FullFee
+            ConcessionaryFee
       </xs:documentation>
     </xs:annotation>    
       <xs:complexContent>
@@ -52,8 +68,5 @@
         </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="Costs" minOccurs="0" maxOccurs="unbounded" type="costsDType"/>
+  <xs:element name="costs" minOccurs="0" maxOccurs="unbounded" type="costsDType"/>
 </xs:schema>
-
-
-
