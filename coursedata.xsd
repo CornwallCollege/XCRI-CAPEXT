@@ -1,0 +1,78 @@
+<xs:schema xmlns="http://xcri.co.uk/courseData" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:dc="http://purl.org/dc/elements/1.1/" 
+           id="ukprn" 
+          targetNamespace="http://xcri.co.uk/courseData" 
+          elementFormDefault="qualified">
+<xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="http://www.xcri.org/svn/trunk/bindings/1.2/dc.xsd"/>
+<xs:annotation>
+    <xs:documentation xml:lang="en">
+      XCRI Schema extensions to support various additional ids
+      XML Schema for http://xcri.co.uk/courseData.xsd namespace
+     
+      Created 2013-02-27
+
+      Created by
+
+      Mike Trebilcock (mike@trebilcock.net)
+    </xs:documentation>
+  </xs:annotation>
+<xs:complexType name="kisInstitutionCode">
+<xs:simpleContent>
+<xs:restriction base="dc:SimpleLiteral">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:pattern value="[0-9]{8}"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:restriction>
+</xs:simpleContent>
+</xs:complexType>
+  <xs:complexType name="kisWidget">
+<xs:simpleContent>
+<xs:restriction base="dc:SimpleLiteral">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:pattern value="[0-9]{8}"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:restriction>
+</xs:simpleContent>
+</xs:complexType>
+  <xs:complexType name="kisCourseid">
+<xs:simpleContent>
+<xs:restriction base="dc:SimpleLiteral">
+<xs:simpleType>
+<xs:restriction base="xs:string" />
+</xs:simpleType>
+</xs:restriction>
+</xs:simpleContent>
+</xs:complexType>
+  <xs:complexType name="kisCourse">
+<xs:simpleContent>
+<xs:restriction base="dc:SimpleLiteral">
+<xs:simpleType>
+<xs:restriction base="xs:string" />
+</xs:simpleType>
+</xs:restriction>
+</xs:simpleContent>
+</xs:complexType>
+<xs:complexType name="SSA">
+<xs:simpleContent>
+<xs:restriction base="dc:SimpleLiteral">
+<xs:simpleType>
+<xs:restriction base="xs:string" />
+</xs:simpleType>
+</xs:restriction>
+</xs:simpleContent>
+</xs:complexType>
+<xs:complexType name="Type">
+<xs:simpleContent>
+<xs:restriction base="dc:SimpleLiteral">
+<xs:simpleType>
+<xs:restriction base="xs:string" />
+</xs:simpleType>
+</xs:restriction>
+</xs:simpleContent>
+</xs:complexType>
+</xs:schema>
